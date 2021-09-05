@@ -3,11 +3,11 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-temp="/tmp/unms-install"
+temp="/tmp/uisptools-install"
 
 args="$*"
 version=""
-branch="master"
+branch="main"
 
 branchRegex=" --branch ([^ ]+)"
 if [[ " ${args}" =~ ${branchRegex} ]]; then
@@ -15,21 +15,24 @@ if [[ " ${args}" =~ ${branchRegex} ]]; then
 fi
 echo "branch=${branch}"
 
-repo="https://uisp.ui.com/v1/${branch}"
+repo="https://raw.githubusercontent.com/Andrewiski/UISP-Tools"
+repoapi="https://api.github.com/repos/Andrewiski/UISP-Tools"
 
 versionRegex=" --version ([^ ]+)"
 if [[ " ${args}" =~ ${versionRegex} ]]; then
   version="${BASH_REMATCH[1]}"
 fi
 
+
 if [ -z "${version}" ]; then
-  latestVersionUrl="${repo}/latest-version"
-  if ! version=$(curl -fsS "${latestVersionUrl}"); then
+  latestReleaseUrl="${repoapi}/releases/latest"
+  if ! version=$(curl --silent "${latestVersionUrl}" | grep -Po '"tag_name": "\K.*?(?=")'); then
     echo >&2 "Failed to obtain latest version info from ${latestVersionUrl}"
     exit 1
   fi
 fi
 echo version="${version}"
+echo "Warning Version is Not used only uses latest for branch"
 
 rm -rf "${temp}"
 if ! mkdir "${temp}"; then
@@ -38,15 +41,22 @@ if ! mkdir "${temp}"; then
 fi
 
 cd "${temp}"
-echo "Downloading installation package for version ${version}."
-packageUrl="${repo}/unms-${version}.tar.gz"
-if ! curl -sS "${packageUrl}" | tar xzf -; then
-  echo >&2 "Failed to download installation package ${packageUrl}"
-  exit 1
-fi
 
-chmod +x install-full.sh
-./install-full.sh ${args} --version "${version}"
+installScriptUrl="${repo}/${branch}/dockerCompose/installUispTools.sh"
+
+echo "Downloading installation script from ${installScriptUrl}."
+if ! curl -sS "${installScriptUrl}"; then
+  echo >&2 "Failed to download install script ${installScriptUrl}"
+  exit 1
+#fi
+
+#if ! curl -sS "${packageUrl}" | tar xzf -; then
+#  echo >&2 "Failed to download installation package ${packageUrl}"
+#  exit 1
+#fi
+
+chmod +x installUispTools.sh
+./installUispTools ${args} --version "${version}"
 
 cd ~
 if ! rm -rf "${temp}"; then

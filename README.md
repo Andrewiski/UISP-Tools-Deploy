@@ -6,7 +6,7 @@
 Run the following commands on the Ubuntu or Debian system to ensure that all required tools are installed:
 ```
 sudo apt-get update
-sudo apt-get install curl sudo bash 
+sudo apt-get install curl sudo bash jq 
 
 ```
 
