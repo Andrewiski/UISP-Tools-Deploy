@@ -45,7 +45,7 @@ cd "${temp}"
 installScriptUrl="${repo}/${branch}/dockerCompose/installUispTools.sh"
 
 echo "Downloading installation script from ${installScriptUrl}."
-if ! curl -sS "${installScriptUrl}" -O "${temp}/installUispTools.sh"; then
+if ! curl -sL "${installScriptUrl}" -o "${temp}/installUispTools.sh"; then
   echo >&2 "Failed to download install script ${installScriptUrl}"
   exit 1
 fi
