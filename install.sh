@@ -48,7 +48,7 @@ echo "Downloading installation script from ${installScriptUrl}."
 if ! curl -sS "${installScriptUrl}"; then
   echo >&2 "Failed to download install script ${installScriptUrl}"
   exit 1
-#fi
+fi
 
 #if ! curl -sS "${packageUrl}" | tar xzf -; then
 #  echo >&2 "Failed to download installation package ${packageUrl}"
