@@ -25,14 +25,14 @@ fi
 
 
 if [ -z "${version}" ]; then
-  latestReleaseUrl="${repoapi}/releases/latest"
+  latestVersionUrl="${repoapi}/releases/latest"
   if ! version=$(curl --silent "${latestVersionUrl}" | grep -Po '"tag_name": "\K.*?(?=")'); then
     echo >&2 "Failed to obtain latest version info from ${latestVersionUrl}"
     exit 1
   fi
 fi
 echo version="${version}"
-echo "Warning Version is Not used only uses latest for branch"
+echo "Warning Version is Not used only downloads current commit of installUispTools.sh for branch"
 
 rm -rf "${temp}"
 if ! mkdir "${temp}"; then

@@ -16,5 +16,5 @@ sudo apt-get install curl sudo bash jq
 Run the command below on the host to install and start UISPTools 
 
 ```
-curl -fsSL https://raw.githubusercontent.com/Andrewiski/UISP-Tools/main/installUispTools.sh > /tmp/installUispTools.sh && sudo bash /tmp/installUispTools.sh
+curl -fsSL https://raw.githubusercontent.com/Andrewiski/UISP-Tools-Deploy/main/install.sh > /tmp/UispToolsInstall.sh && sudo bash /tmp/UispToolsInstall.sh
 ```
