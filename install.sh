@@ -55,8 +55,8 @@ fi
 #  exit 1
 #fi
 
-chmod +x installUispTools.sh
-./installUispTools ${args} --version "${version}"
+chmod +x "installUispTools.sh"
+./installUispTools.sh ${args} --version "${version}"
 
 cd ~
 if ! rm -rf "${temp}"; then
